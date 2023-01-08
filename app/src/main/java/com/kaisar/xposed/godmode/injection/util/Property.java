@@ -23,6 +23,8 @@ public final class Property<V> {
         this.v = v;
     }
 
+
+//    通知属性被修改了
     public void set(V v) {
         if (this.v != v) {
             this.v = v;

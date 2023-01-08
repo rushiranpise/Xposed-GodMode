@@ -110,6 +110,7 @@ public final class GodModeInjector implements IXposedHookLoadPackage, IXposedHoo
             XServiceManager.initForSystemServer();
             XServiceManager.registerService("godmode", (XServiceManager.ServiceFetcher<Binder>) GodModeManagerService::new);
         } else {//Run in other application processes
+//            hook activity的onCreate
             XposedHelpers.findAndHookMethod(Application.class, "attach", Context.class, new XC_MethodHook() {
                 @Override
                 protected void afterHookedMethod(MethodHookParam param) throws Throwable {
@@ -241,6 +242,7 @@ public final class GodModeInjector implements IXposedHookLoadPackage, IXposedHoo
         //hook activity#lifecycle block view
         ActivityLifecycleHook lifecycleHook = new ActivityLifecycleHook();
         actRuleProp.addOnPropertyChangeListener(lifecycleHook);
+//        hook所有activity的生命周期事件
         XposedHelpers.findAndHookMethod(Activity.class, "onPostResume", lifecycleHook);
         XposedHelpers.findAndHookMethod(Activity.class, "onDestroy", lifecycleHook);
 

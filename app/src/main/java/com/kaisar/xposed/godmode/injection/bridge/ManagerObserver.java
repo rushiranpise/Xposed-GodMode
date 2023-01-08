@@ -3,6 +3,7 @@ package com.kaisar.xposed.godmode.injection.bridge;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+import android.util.Log;
 
 import com.kaisar.xposed.godmode.IObserver;
 import com.kaisar.xposed.godmode.injection.GodModeInjector;

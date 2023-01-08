@@ -386,7 +386,9 @@ public final class GodModeManagerService extends IGodModeManager.Stub implements
      */
     @Override
     public boolean deleteRule(String packageName, ViewRule viewRule) throws RemoteException {
-        enforcePermission("delete rule fail permission denied");
+        if(!checkPermission(packageName)){
+            enforcePermission("delete rule fail permission denied");
+        }
         if (!mStarted) return false;
         try {
             ActRules actRules = Preconditions.checkNotNull(mAppRulesCache.get(packageName), "not found this rule can't delete.");

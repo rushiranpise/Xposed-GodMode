@@ -2,6 +2,7 @@ package com.kaisar.xposed.godmode.injection.hook;
 
 import android.app.Activity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 
@@ -26,6 +27,8 @@ import static com.kaisar.xposed.godmode.GodModeApplication.TAG;
  * Created by jrsen on 17-10-15.
  */
 
+
+// 在activity布局时应用规则的监听器
 public final class ActivityLifecycleHook extends XC_MethodHook implements Property.OnPropertyChangeListener<ActRules> {
 
     private static final WeakHashMap<Activity, OnLayoutChangeListener> sActivities = new WeakHashMap<>();
@@ -42,6 +45,7 @@ public final class ActivityLifecycleHook extends XC_MethodHook implements Proper
         if ("onPostResume".equals(methodName)) {
             if (!sActivities.containsKey(activity)) {
                 OnLayoutChangeListener listener = new OnLayoutChangeListener(activity);
+//                设置布局监听器
                 decorView.getViewTreeObserver().addOnGlobalLayoutListener(listener);
                 sActivities.put(activity, listener);
             }
@@ -71,6 +75,7 @@ public final class ActivityLifecycleHook extends XC_MethodHook implements Proper
             List<ViewRule> rules = entry.getValue();
             for (Activity activity : sActivities.keySet()) {
                 if (TextUtils.equals(activity.getComponentName().getClassName(), entry.getKey())) {
+//                    Log.e(TAG,"begin revoke" + entry.getKey());
                     ViewController.revokeRuleBatch(activity, rules);
                 }
             }
@@ -88,7 +93,7 @@ public final class ActivityLifecycleHook extends XC_MethodHook implements Proper
             }
         }
     }
-
+// 布局监听器，在activity布局时应用已经设置好的规则
     static final class OnLayoutChangeListener implements ViewTreeObserver.OnGlobalLayoutListener {
 
         final WeakReference<Activity> activityReference;

@@ -8,6 +8,7 @@ import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Rect;
+import android.util.Log;
 import android.view.Display;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -81,7 +82,7 @@ public final class DispatchKeyEventHook extends XC_MethodHook implements Propert
             param.setResult(dispatchKeyEvent(activity, event));
         }
     }
-
+// 按键事件
     private boolean dispatchKeyEvent(final Activity activity, KeyEvent keyEvent) {
         Logger.d(TAG, keyEvent.toString());
         int action = keyEvent.getAction();
@@ -156,6 +157,10 @@ public final class DispatchKeyEventHook extends XC_MethodHook implements Propert
                     Logger.e(TAG, "block fail", e);
                     Toast.makeText(activity, GmResources.getString(R.string.block_fail, e.getMessage()), Toast.LENGTH_SHORT).show();
                 }
+            });
+            View revoke = mNodeSelectorPanel.findViewById(R.id.revoke);
+            revoke.setOnClickListener(v->{
+                ViewController.revokeLastRule();
             });
             View exchange = mNodeSelectorPanel.findViewById(R.id.exchange);
             View topcentent = mNodeSelectorPanel.findViewById(R.id.topcentent);

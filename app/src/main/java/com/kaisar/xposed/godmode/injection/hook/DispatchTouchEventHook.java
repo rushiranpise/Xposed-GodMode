@@ -68,7 +68,7 @@ public final class DispatchTouchEventHook extends XC_MethodHook {
             }
         }
     }
-
+// hook点击事件
     private boolean dispatchTouchEvent(View v, MotionEvent event) {
         int action = event.getActionMasked();
         if (action == MotionEvent.ACTION_DOWN) {

@@ -1,3 +1,4 @@
 [submodule "libxservicemanager"]
 	path = libxservicemanager
-	url = https://github.com/jrsen/XServiceManager.git
+	url = https://github.com/F-19-F/XServiceManager
+	branch = androidT

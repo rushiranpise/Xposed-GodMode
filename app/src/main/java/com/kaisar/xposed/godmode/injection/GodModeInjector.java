@@ -75,8 +75,10 @@ public final class GodModeInjector implements IXposedHookLoadPackage, IXposedHoo
             state = checkBlockList(loadPackageParam.packageName) ? State.BLOCKED : State.ALLOWED;
         }
         if (state == State.ALLOWED) {
+            // 显示布局边界
             switchProp.set(enable);
         }
+        // 显示侧栏
         dispatchKeyEventHook.setdisplay(enable);
     }
 
@@ -294,4 +296,7 @@ public final class GodModeInjector implements IXposedHookLoadPackage, IXposedHoo
         XposedHelpers.findAndHookMethod(View.class, "dispatchTouchEvent", MotionEvent.class, eventHandlerHook);
     }
 
+    public static DispatchKeyEventHook getDispatchKeyEventHook(){
+        return dispatchKeyEventHook;
+    }
 }

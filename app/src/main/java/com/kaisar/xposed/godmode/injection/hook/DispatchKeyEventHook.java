@@ -259,6 +259,7 @@ public final class DispatchKeyEventHook extends XC_MethodHook implements Propert
         }
     }
 
+//    根据process修改选中的view
     @Override
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
         if (fromUser) {
@@ -280,4 +281,19 @@ public final class DispatchKeyEventHook extends XC_MethodHook implements Propert
     public void onStopTrackingTouch(SeekBar seekBar) {
         mNodeSelectorPanel.setAlpha(1f);
     }
+
+    public void updateSelectedView(View v){
+        int index = -1;
+        for (int i = 0; i < mViewNodes.size(); i++) {
+            if(mViewNodes.get(i).get() == v){
+                index = i;
+                break;
+            }
+        }
+        if(index >= 0){
+            seekbar.setProgress(index);
+            onProgressChanged(seekbar,index,true);
+        }
+    }
+
 }

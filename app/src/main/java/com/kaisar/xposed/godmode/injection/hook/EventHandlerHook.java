@@ -8,6 +8,7 @@ import android.graphics.Color;
 import android.graphics.Rect;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 import android.view.HapticFeedbackConstants;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
@@ -18,6 +19,7 @@ import android.view.ViewParent;
 import android.view.WindowManager;
 import android.widget.Toast;
 
+import com.kaisar.xposed.godmode.injection.GodModeInjector;
 import com.kaisar.xposed.godmode.injection.ViewController;
 import com.kaisar.xposed.godmode.injection.ViewHelper;
 import com.kaisar.xposed.godmode.injection.bridge.GodModeManager;
@@ -105,6 +107,8 @@ public final class EventHandlerHook extends XC_MethodHook implements Property.On
                 }
                 return false;
             }
+            // 更新红色标识组件的位置
+            GodModeInjector.getDispatchKeyEventHook().updateSelectedView(v);
             mDragging = true;
             mMultiPointLock = true;//防止多个触点同时触发
             //防止列表控件拦截事件传递

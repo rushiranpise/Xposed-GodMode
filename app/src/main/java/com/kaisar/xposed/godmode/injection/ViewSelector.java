@@ -163,9 +163,9 @@ public final class ViewSelector implements Property.OnPropertyChangeListener<Boo
                 }
             });
             View btnUp = mNodeSelectorPanel.findViewById(R.id.Up);
-            btnUp.setOnClickListener(v -> seekbaradd());
+            btnUp.setOnClickListener(v -> seekbarreduce());
             View btnDown = mNodeSelectorPanel.findViewById(R.id.Down);
-            btnDown.setOnClickListener(v -> seekbarreduce());
+            btnDown.setOnClickListener(v -> seekbaradd());
             container.addView(mNodeSelectorPanel);
             mNodeSelectorPanel.setAlpha(0);
             mNodeSelectorPanel.post(() -> {
@@ -178,7 +178,7 @@ public final class ViewSelector implements Property.OnPropertyChangeListener<Boo
                             .setInterpolator(new DecelerateInterpolator(1.0f))
                             .start();
                 }catch (Throwable ignore){
-                    
+
                 }
             });
             mKeySelecting = true;

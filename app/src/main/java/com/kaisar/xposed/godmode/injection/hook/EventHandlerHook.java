@@ -239,7 +239,7 @@ public final class EventHandlerHook extends XC_MethodHook implements Property.On
                 public void onAnimationStart(View animView, Animator animation) {
                     //Make original view gone
                     mViewRule.visibility = View.GONE;
-                    ViewController.applyRule(v, mViewRule,false);
+                    ViewController.applyRule(v, mViewRule,true);
                     GodModeManager.getDefault().writeRule(v.getContext().getPackageName(), mViewRule, mSnapshot);
                     recycleNullableBitmap(mSnapshot);
                     mMaskView.detachFromContainer();

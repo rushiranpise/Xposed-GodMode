@@ -50,7 +50,7 @@
                     android:layout_gravity="center"
                     android:clickable="true"
                     android:layoutDirection="rtl"
-                    android:rotation="90"
+                    android:rotation="-90"
                     android:tag="@string/tag_gm_cmp" />
 
             </FrameLayout>

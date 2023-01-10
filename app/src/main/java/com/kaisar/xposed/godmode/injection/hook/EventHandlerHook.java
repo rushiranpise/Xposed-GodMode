@@ -8,7 +8,6 @@ import android.graphics.Color;
 import android.graphics.Rect;
 import android.os.Handler;
 import android.os.Looper;
-import android.util.Log;
 import android.view.HapticFeedbackConstants;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
@@ -108,7 +107,7 @@ public final class EventHandlerHook extends XC_MethodHook implements Property.On
                 return false;
             }
             // 更新红色标识组件的位置
-            GodModeInjector.getDispatchKeyEventHook().updateSelectedView(v);
+            GodModeInjector.getViewSelector().updateSelectedView(v);
             mDragging = true;
             mMultiPointLock = true;//防止多个触点同时触发
             //防止列表控件拦截事件传递
@@ -201,7 +200,7 @@ public final class EventHandlerHook extends XC_MethodHook implements Property.On
 
             mSnapshot = ViewHelper.snapshotView(ViewHelper.findTopParentViewByChildView(v));
             mViewRule = ViewHelper.makeRule(v);
-            ViewController.applyRule(v, mViewRule);
+            ViewController.applyRule(v, mViewRule,false);
         } catch (PackageManager.NameNotFoundException | NullPointerException e) {
             e.printStackTrace();
         }
@@ -240,7 +239,7 @@ public final class EventHandlerHook extends XC_MethodHook implements Property.On
                 public void onAnimationStart(View animView, Animator animation) {
                     //Make original view gone
                     mViewRule.visibility = View.GONE;
-                    ViewController.applyRule(v, mViewRule);
+                    ViewController.applyRule(v, mViewRule,false);
                     GodModeManager.getDefault().writeRule(v.getContext().getPackageName(), mViewRule, mSnapshot);
                     recycleNullableBitmap(mSnapshot);
                     mMaskView.detachFromContainer();

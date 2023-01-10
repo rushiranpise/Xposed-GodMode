@@ -1,4 +1,4 @@
-package com.kaisar.xposed.godmode.injection.hook;
+package com.kaisar.xposed.godmode.injection;
 
 import static com.kaisar.xposed.godmode.GodModeApplication.TAG;
 import static com.kaisar.xposed.godmode.injection.util.CommonUtils.recycleNullableBitmap;
@@ -8,7 +8,6 @@ import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Rect;
-import android.util.Log;
 import android.view.Display;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -43,7 +42,7 @@ import java.util.Locale;
 import de.robv.android.xposed.XC_MethodHook;
 import de.robv.android.xposed.XposedHelpers;
 
-public final class DispatchKeyEventHook extends XC_MethodHook implements Property.OnPropertyChangeListener<Boolean>, SeekBar.OnSeekBarChangeListener {
+public final class ViewSelector implements Property.OnPropertyChangeListener<Boolean>, SeekBar.OnSeekBarChangeListener {
 
     private static final int OVERLAY_COLOR = Color.argb(150, 255, 0, 0);
     private final List<WeakReference<View>> mViewNodes = new ArrayList<>();
@@ -56,11 +55,14 @@ public final class DispatchKeyEventHook extends XC_MethodHook implements Propert
     private SeekBar seekbar = null;
     public static volatile boolean mKeySelecting = false;
 
-    public void setactivity(final Activity a) {
+
+    public void setTopActivity(final Activity a) {
+        Logger.d(TAG+".SelectPanel","set top activity: " + a);
         activityList.add(a);
+        ViewController.cleanStack();
     }
 
-    public void setdisplay(Boolean display) {
+    public void setPanel(Boolean display) {
         if (activityList.size() == 0) return;
         currentActivity = ActivityUtils.getTopActivity(GodModeInjector.appContext, activityList);
         if (currentActivity == null) {
@@ -74,30 +76,6 @@ public final class DispatchKeyEventHook extends XC_MethodHook implements Propert
         }
     }
 
-    @Override
-    protected void beforeHookedMethod(MethodHookParam param) {
-        if (GodModeInjector.switchProp.get() && !DispatchTouchEventHook.mDragging) {
-            Activity activity = (Activity) param.thisObject;
-            KeyEvent event = (KeyEvent) param.args[0];
-            param.setResult(dispatchKeyEvent(activity, event));
-        }
-    }
-// 按键事件
-    private boolean dispatchKeyEvent(final Activity activity, KeyEvent keyEvent) {
-        Logger.d(TAG, keyEvent.toString());
-        int action = keyEvent.getAction();
-        int keyCode = keyEvent.getKeyCode();
-        if (action == KeyEvent.ACTION_UP &&
-                (keyCode == KeyEvent.KEYCODE_VOLUME_UP || keyCode == KeyEvent.KEYCODE_VOLUME_DOWN)) {
-            if (!mKeySelecting) {
-                showNodeSelectPanel(activity);
-            } else {
-                //hide node select panel
-                dismissNodeSelectPanel();
-            }
-        }
-        return true;
-    }
 
     private void showNodeSelectPanel(final Activity activity) {
         mViewNodes.clear();
@@ -119,7 +97,7 @@ public final class DispatchKeyEventHook extends XC_MethodHook implements Propert
             TooltipCompat.setTooltipText(btnBlock, GmResources.getText(R.string.accessibility_block));
             btnBlock.setOnClickListener(v -> {
                 try {
-                    mNodeSelectorPanel.setAlpha(0f);
+//                    mNodeSelectorPanel.setAlpha(0f);
                     final View view = mViewNodes.get(mCurrentViewIndex).get();
                     Logger.d(TAG, "removed view = " + view);
                     if (view != null) {
@@ -134,19 +112,19 @@ public final class DispatchKeyEventHook extends XC_MethodHook implements Propert
                             @Override
                             public void onAnimationStart(View animView, Animator animation) {
                                 viewRule.visibility = View.GONE;
-                                ViewController.applyRule(view, viewRule);
+                                ViewController.applyRule(view, viewRule,true);
+                                GodModeManager.getDefault().writeRule(activity.getPackageName(), viewRule, snapshot);
                             }
 
                             @Override
                             public void onAnimationEnd(View animView, Animator animation) {
-                                GodModeManager.getDefault().writeRule(activity.getPackageName(), viewRule, snapshot);
                                 recycleNullableBitmap(snapshot);
                                 particleView.detachFromContainer();
-                                mNodeSelectorPanel.animate()
-                                        .alpha(1.0f)
-                                        .setInterpolator(new DecelerateInterpolator(1.0f))
-                                        .setDuration(300)
-                                        .start();
+//                                mNodeSelectorPanel.animate()
+//                                        .alpha(1.0f)
+//                                        .setInterpolator(new DecelerateInterpolator(1.0f))
+//                                        .setDuration(300)
+//                                        .start();
                             }
                         });
                         particleView.boom(view);
@@ -192,20 +170,20 @@ public final class DispatchKeyEventHook extends XC_MethodHook implements Propert
             mKeySelecting = true;
             XposedHelpers.findAndHookMethod(Activity.class, "dispatchKeyEvent", KeyEvent.class, new XC_MethodHook() {
                 protected void beforeHookedMethod(MethodHookParam param) {
-                    if (GodModeInjector.switchProp.get() && !DispatchTouchEventHook.mDragging) {
+                    if (GodModeInjector.switchProp.get()) {
                         KeyEvent event = (KeyEvent) param.args[0];
                         int action = event.getAction();
                         int keyCode = event.getKeyCode();
                         if (action == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_VOLUME_DOWN) {
-                            seekbarreduce();
-                        }else if(action == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_VOLUME_UP){
                             seekbaradd();
+                        }else if(action == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_VOLUME_UP){
+                            seekbarreduce();
                         }
                         param.setResult(true);
                     }
                 }
             });
-        } catch (Exception e) {
+        } catch (Throwable e) {
             //god mode package uninstalled?
             Logger.e(TAG, "showNodeSelectPanel fail", e);
             mKeySelecting = false;
@@ -294,6 +272,13 @@ public final class DispatchKeyEventHook extends XC_MethodHook implements Propert
             seekbar.setProgress(index);
             onProgressChanged(seekbar,index,true);
         }
+    }
+
+
+    public void updateViewNodes(){
+        mViewNodes.clear();
+        mViewNodes.addAll(ViewHelper.buildViewNodes(activity.getWindow().getDecorView()));
+        seekbar.setMax(mViewNodes.size() - 1);
     }
 
 }

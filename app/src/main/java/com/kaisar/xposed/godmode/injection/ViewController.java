@@ -33,12 +33,10 @@ public final class ViewController {
 //
     private final static SparseArray<Pair<WeakReference<View>, ViewProperty>> blockedViewCache = new SparseArray<>();
     private final static Stack<ViewRule> editStack = new Stack<>();
-    private static boolean inBatch;
 
 // 批量应用规则
     public static void applyRuleBatch(Activity activity, List<ViewRule> rules) {
         Logger.d(TAG, "[ApplyRuleBatch info start------------------------------------]");
-        inBatch = true;
         for (ViewRule rule : new ArrayList<>(rules)) {
             try {
                 Logger.d(TAG, "[Apply rule]:" + rule.toString());
@@ -53,7 +51,7 @@ public final class ViewController {
                     view = ViewHelper.findViewBestMatch(activity, rule);
                     Preconditions.checkNotNull(view, "apply rule fail not match any view");
                 }
-                boolean blocked = applyRule(view, rule);
+                boolean blocked = applyRule(view, rule,false);
                 if (blocked) {
                     Logger.i(TAG, String.format("[Success] %s#%s has been blocked", activity, view));
                 } else {
@@ -63,11 +61,10 @@ public final class ViewController {
                 Logger.w(TAG, String.format("[Failed] %s#%s block failed because %s", activity, rule.viewClass, e.getMessage()));
             }
         }
-        inBatch = false;
         Logger.d(TAG, "[ApplyRuleBatch info end------------------------------------]");
     }
 // 根据Rule的规则设置view组建的可见性
-    public static boolean applyRule(View v, ViewRule viewRule) {
+    public static boolean applyRule(View v, ViewRule viewRule, boolean fromUser) {
         int ruleHashCode = viewRule.hashCode();
         Pair<WeakReference<View>, ViewProperty> viewInfo = blockedViewCache.get(ruleHashCode);
         View blockedView = viewInfo != null ? viewInfo.first.get() : null;
@@ -96,7 +93,7 @@ public final class ViewController {
 //        记录已经被block的view组件
         blockedViewCache.put(ruleHashCode, Pair.create(new WeakReference<>(v), viewProperty));
 //        单个操作的情况下
-        if(!inBatch){
+        if(fromUser){
             editStack.push(viewRule);
         }
         Logger.d(TAG, String.format(Locale.getDefault(), "apply rule add view cache %d=%s", ruleHashCode, v));
@@ -161,6 +158,12 @@ public final class ViewController {
             ViewCompat.setVisibility(v, viewRule.visibility);
         }
     }
+
+
+    public static void cleanStack(){
+        editStack.clear();
+    }
+
 
     private static final class ViewProperty {
 

@@ -2,11 +2,12 @@ package com.kaisar.xposed.godmode.injection.hook;
 
 import android.app.Activity;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 
+import com.kaisar.xposed.godmode.injection.GodModeInjector;
 import com.kaisar.xposed.godmode.injection.ViewController;
+import com.kaisar.xposed.godmode.injection.ViewSelector;
 import com.kaisar.xposed.godmode.injection.util.Logger;
 import com.kaisar.xposed.godmode.injection.util.Property;
 import com.kaisar.xposed.godmode.rule.ActRules;
@@ -43,6 +44,7 @@ public final class ActivityLifecycleHook extends XC_MethodHook implements Proper
         /*!!!这里有坑不要hook onCreate和onResume 因为getDecorView会执行installContentView的操作
          所以在Activity的子类中有可能去requestFeature会导致异常所以尽量找一个很靠后的生命周期函数*/
         if ("onPostResume".equals(methodName)) {
+            GodModeInjector.getViewSelector().setTopActivity(activity);
             if (!sActivities.containsKey(activity)) {
                 OnLayoutChangeListener listener = new OnLayoutChangeListener(activity);
 //                设置布局监听器
@@ -91,6 +93,9 @@ public final class ActivityLifecycleHook extends XC_MethodHook implements Proper
                     ViewController.applyRuleBatch(activity, rules);
                 }
             }
+        }
+        if(ViewSelector.mKeySelecting){
+            GodModeInjector.getViewSelector().updateViewNodes();
         }
     }
 // 布局监听器，在activity布局时应用已经设置好的规则

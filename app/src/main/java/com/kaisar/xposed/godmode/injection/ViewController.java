@@ -108,6 +108,12 @@ public final class ViewController {
         }catch (EmptyStackException e){
             return false;
         }
+        int ruleHashCode = last.hashCode();
+        Pair<WeakReference<View>, ViewProperty> viewInfo = blockedViewCache.get(ruleHashCode);
+        View view = viewInfo != null ? viewInfo.first.get() : null;
+        if(view!=null){
+            revokeRule(view,last);
+        }
         GodModeManager.getDefault().deleteRule(GodModeInjector.loadPackageParam.packageName,last);
         return true;
     }

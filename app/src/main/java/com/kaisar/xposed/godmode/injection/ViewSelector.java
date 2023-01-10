@@ -53,6 +53,23 @@ public final class ViewSelector implements Property.OnPropertyChangeListener<Boo
     private SeekBar seekbar = null;
     public static volatile boolean mKeySelecting = false;
 
+    public ViewSelector(){
+        XposedHelpers.findAndHookMethod(Activity.class, "dispatchKeyEvent", KeyEvent.class, new XC_MethodHook() {
+            protected void beforeHookedMethod(MethodHookParam param) {
+                if (GodModeInjector.switchProp.get()) {
+                    KeyEvent event = (KeyEvent) param.args[0];
+                    int action = event.getAction();
+                    int keyCode = event.getKeyCode();
+                    if (action == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_VOLUME_DOWN) {
+                        seekbaradd();
+                    }else if(action == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_VOLUME_UP){
+                        seekbarreduce();
+                    }
+                    param.setResult(true);
+                }
+            }
+        });
+    }
 
     public void setTopActivity(final Activity a) {
         Logger.d(TAG+".SelectPanel","set top activity: " + a);
@@ -152,30 +169,19 @@ public final class ViewSelector implements Property.OnPropertyChangeListener<Boo
             container.addView(mNodeSelectorPanel);
             mNodeSelectorPanel.setAlpha(0);
             mNodeSelectorPanel.post(() -> {
-                mNodeSelectorPanel.setTranslationX(mNodeSelectorPanel.getWidth() / 2.0f);
-                mNodeSelectorPanel.animate()
-                        .alpha(1)
-                        .translationX(0)
-                        .setDuration(300)
-                        .setInterpolator(new DecelerateInterpolator(1.0f))
-                        .start();
-            });
-            mKeySelecting = true;
-            XposedHelpers.findAndHookMethod(Activity.class, "dispatchKeyEvent", KeyEvent.class, new XC_MethodHook() {
-                protected void beforeHookedMethod(MethodHookParam param) {
-                    if (GodModeInjector.switchProp.get()) {
-                        KeyEvent event = (KeyEvent) param.args[0];
-                        int action = event.getAction();
-                        int keyCode = event.getKeyCode();
-                        if (action == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_VOLUME_DOWN) {
-                            seekbaradd();
-                        }else if(action == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_VOLUME_UP){
-                            seekbarreduce();
-                        }
-                        param.setResult(true);
-                    }
+                try {
+                    mNodeSelectorPanel.setTranslationX(mNodeSelectorPanel.getWidth() / 2.0f);
+                    mNodeSelectorPanel.animate()
+                            .alpha(1)
+                            .translationX(0)
+                            .setDuration(300)
+                            .setInterpolator(new DecelerateInterpolator(1.0f))
+                            .start();
+                }catch (Throwable ignore){
+                    
                 }
             });
+            mKeySelecting = true;
         } catch (Throwable e) {
             //god mode package uninstalled?
             Logger.e(TAG, "showNodeSelectPanel fail", e);

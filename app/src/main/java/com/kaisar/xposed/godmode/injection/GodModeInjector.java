@@ -60,7 +60,6 @@ public final class GodModeInjector implements IXposedHookLoadPackage, IXposedHoo
     public static XC_LoadPackage.LoadPackageParam loadPackageParam;
     private static State state = State.UNKNOWN;
     private static ViewSelector viewSelector = new ViewSelector();
-    public static Context appContext;
 
     enum State {
         UNKNOWN,

@@ -1,5 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">上帝模式</string>
+    <string name="app_name">God Mode</string>
 
     <string name="pref_key_progress_indicator" translatable="false">progress_indicator</string>
     <string name="pref_key_editor" translatable="false">editor_switch</string>
@@ -7,76 +8,76 @@
     <string name="pref_key_donate" translatable="false">donate</string>
     <string name="pref_key_app_rules" translatable="false">app_rules</string>
 
-    <string name="pref_header_general">通用</string>
-    <string name="pref_header_support">支持</string>
-    <string name="pref_header_app_rules">应用规则</string>
+    <string name="pref_header_general">GENERAL</string>
+    <string name="pref_header_support">SUPPORT</string>
+    <string name="pref_header_app_rules">APP RULES</string>
 
-    <string name="pref_title_god_mode">上帝模式</string>
-    <string name="pref_description_god_mode">伙计们可别玩脱了</string>
+    <string name="pref_title_god_mode">GodMode</string>
+    <string name="pref_description_god_mode">Start editor</string>
 
-    <string name="pref_title_donate_me">支持我的老伙计</string>
-    <string name="pref_description_donate_me">太感谢你了我的伙计</string>
+    <string name="pref_title_donate_me">Support my old buddies</string>
+    <string name="pref_description_donate_me">Thank you so much my buddy</string>
 
-    <string name="pref_title_add_group">加入组织</string>
-    <string name="pref_description_add_group">这里有一群老伙计们</string>
+    <string name="pref_title_add_group">Join the group</string>
+    <string name="pref_description_add_group">There are a group of old guys here</string>
 
-    <string name="menu_delete_rule">删除规则</string>
-    <string name="menu_backup_rule">备份规则</string>
-    <string name="thanks">感谢你我的伙计</string>
-    <string name="tips_qrcord">嘿！伙计二维码帮你放相册了</string>
-    <string name="dialog_btn_alipay">支付宝支持</string>
-    <string name="dialog_btn_wxpay">微信支持</string>
-    <string name="donate_thanks">看看 我的伙计是多么的慷慨 感谢你的支持!</string>
-    <string name="enter_edit">退出编辑</string>
-    <string name="exit_edit">开始编辑</string>
-    <string name="manage">管理</string>
-    <string name="xposed_description">神说要有人，于是就有了伙计们。</string>
+    <string name="menu_delete_rule">Delete rules</string>
+    <string name="menu_backup_rule">Backup rules</string>
+    <string name="thanks">Thank you my buddy</string>
+    <string name="tips_qrcord">The QR code image has been placed in your gallery</string>
+    <string name="dialog_btn_alipay">Alipay support</string>
+    <string name="dialog_btn_wxpay">WeChat support</string>
+    <string name="donate_thanks">See how generous my buddy is! Thanks for your support!</string>
+    <string name="enter_edit">Exit editor</string>
+    <string name="exit_edit">Start editor</string>
+    <string name="manage">Manager</string>
+    <string name="xposed_description">Like God, Remove any elements on the interface that you don’t like</string>
 
-    <string name="menu_delete_rules">删除全部规则</string>
-    <string name="menu_backup_rules">备份全部规则</string>
-    <string name="menu_title_restore_rules">恢复规则</string>
-    <string name="menu_title_restore_rules_description">从外部存储恢复规则</string>
-    <string name="menu_icon_switch_show">显示图标</string>
-    <string name="menu_icon_switch_hide">隐藏图标</string>
-    <string name="menu_icon_switch_description">从桌面隐藏/显示图标</string>
+    <string name="menu_delete_rules">Delete all rules</string>
+    <string name="menu_backup_rules">Backup all rules</string>
+    <string name="menu_title_restore_rules">Restore Rules</string>
+    <string name="menu_title_restore_rules_description">Restore rules from external storage</string>
+    <string name="menu_icon_switch_show">Show icon</string>
+    <string name="menu_icon_switch_hide">Hide icon</string>
+    <string name="menu_icon_switch_description">Hide/show icons from desktop</string>
 
-    <string name="title_app_rule">应用规则</string>
-    <string name="title_rule_details">规则详情</string>
+    <string name="title_app_rule">App Rules</string>
+    <string name="title_rule_details">Details</string>
 
     <string name="field_rule_alias" translatable="false">[%1$s]\n</string>
-    <string name="field_activity">依附界面:%1$s</string>
-    <string name="field_view">控件类型:%1$s</string>
+    <string name="field_activity">Activity:%1$s</string>
+    <string name="field_view">View:%1$s</string>
 
-    <string name="hey_guy">嘿 伙计</string>
-    <string name="not_active_module">上帝模式还没有激活，呃… 我是说也许你应该到管理器中重新激活一下</string>
-    <string name="welcome_title">嘿！伙计，真高兴又见到你！</string>
+    <string name="hey_guy">Hey guy</string>
+    <string name="not_active_module">Module not Active</string>
+    <string name="welcome_title">Welcome</string>
 
-    <string name="snack_bar_msg_revert_rule_fail">删除规则失败</string>
-    <string name="snack_bar_msg_backup_rule_fail">备份规则失败</string>
-    <string name="snack_bar_msg_restore_rules_fail">恢复规则失败</string>
-    <string name="dialog_btn_copy">复制给我的老伙计</string>
-    <string name="crash_tip">    我想你应该遇了些麻烦 天知道这该死的程序都干了些什么 我想你应该把下面这些奇奇怪怪的日志复制给老伙计 也许有用吧 是的 我是说也许 谁知道呢\n\n</string>
-    <string name="wechat_donate_tips">伙计 二维码已经放到相册了 点击+号扫一扫从相册选取</string>
-    <string name="update_tips">\t我想你可以试试用上帝模式屏蔽一些令人烦恼的按钮。噢！没错这听起来很有趣。不过这个小家伙有时会像汤姆家那只该死的倔驴一样不听话，别担心伙计们，我会尽快修理好的！\n\n\t伙计们玩的开心记得支持一下你们的老伙计 非常感谢！噢 上帝啊 看看我到底在说些什么我想我应该安静一下…</string>
-    <string name="rule_details_field_create_time">创建日期</string>
-    <string name="rule_details_field_generate_version">生成版本</string>
-    <string name="rule_details_field_activity">依附界面</string>
-    <string name="rule_details_field_alias">控件别名</string>
-    <string name="rule_details_field_view_bounds">控件边界</string>
-    <string name="rule_details_field_view_type">控件类型</string>
-    <string name="rule_details_field_view_depth">布局深度</string>
-    <string name="rule_details_field_res_name">资源名称</string>
-    <string name="rule_details_field_text">控件文本</string>
-    <string name="rule_details_field_description">控件描述</string>
-    <string name="rule_details_field_visible">可见性</string>
-    <string name="rule_details_invisible">占位</string>
-    <string name="rule_details_gone">不占位</string>
-    <string name="rule_details_set_alias">设置别名</string>
+    <string name="snack_bar_msg_revert_rule_fail">Delete rule failed</string>
+    <string name="snack_bar_msg_backup_rule_fail"> Backup rule failed</string>
+    <string name="snack_bar_msg_restore_rules_fail">Failed to restore rules</string>
+    <string name="dialog_btn_copy">COPY</string>
+    <string name="crash_tip">Crash detected\n</string>
+    <string name="wechat_donate_tips">Donate</string>
+    <string name="update_tips">Donate</string>
+    <string name="rule_details_field_create_time">Create time</string>
+    <string name="rule_details_field_generate_version">Match version</string>
+    <string name="rule_details_field_activity">Activity</string>
+    <string name="rule_details_field_alias">Alias</string>
+    <string name="rule_details_field_view_bounds">Bounds</string>
+    <string name="rule_details_field_view_type">Type</string>
+    <string name="rule_details_field_view_depth">Depth</string>
+    <string name="rule_details_field_res_name">Resource name</string>
+    <string name="rule_details_field_text">Text</string>
+    <string name="rule_details_field_description">Dscription</string>
+    <string name="rule_details_field_visible">Visibility</string>
+    <string name="rule_details_invisible">Invisible</string>
+    <string name="rule_details_gone">Gone</string>
+    <string name="rule_details_set_alias">Set Alias</string>
 
-    <string name="top_revert_tip">噢 上帝，原谅这只愚蠢的土拨鼠吧！</string>
-    <string name="accessibility_block">屏蔽</string>
-    <string name="block_fail">屏蔽失败:%1$s</string>
-    <string name="dialog_message_query_community">别着急我的伙计我以上帝的名义打赌这决定不会超过5秒相信我</string>
+    <string name="top_revert_tip">Move here to cancel</string>
+    <string name="accessibility_block">Block</string>
+    <string name="block_fail">Failed to block:%1$s</string>
+    <string name="dialog_message_query_community">Loading community info...</string>
     <string name="tag_gm_cmp" translatable="false">gm_cmp</string>
 
     <string name="pref_key_detail_rule_info" translatable="false">rule_info</string>
@@ -94,8 +95,8 @@
     <string name="pref_key_detail_view_visible" translatable="false">view_visibility</string>
     <string name="pref_key_detail_preview_image" translatable="false">preview_image</string>
     <string name="res_inject_success" translatable="false">Resources injection success</string>
-    <string name="fetch_group_list_err1">嘿 伙计 我想这一定是个臭虫</string>
-    <string name="fetch_group_list_err2">噢 糟糕 我想上帝也不知道发生了什么</string>
-    <string name="fetch_group_list_err3">嘿 伙计, 快来看看这是什么%1$s 真是有趣!</string>
+    <string name="fetch_group_list_err1">Error: group list is empty</string>
+    <string name="fetch_group_list_err2">Error: unknown exception</string>
+    <string name="fetch_group_list_err3">Error: %1$s</string>
 
 </resources>

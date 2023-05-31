@@ -1,33 +1,33 @@
 # Xposed-GodMode
 
-## Oh 我的上帝 这是什么鬼东西?
+## Oh my god what the hell is this?
 
-借助于```Xposed```你可以在任何app中屏蔽你不喜欢的东西
+With ```Xposed``` you can block what you don't like in any app
 
-目前功能类似于PC端的AdBlock
+The current function is similar to AdBlock on the PC side
 
-## 嘿 这看起来真不错 我可以用它干什么?
+## Hey this looks really nice what can I do with it?
 
-- 已支持
-  - [x] 屏蔽控件比如广告或者巨丑无比的按钮
+- Supported
+   - [x] Block controls such as ads or ugly buttons
 
-- 预计以后支持
-  - [ ] 支持导出修改后的应用
-  - [ ] 修改控件属性:大小/位置/文本/图片
+- Expected to support in the future
+   - [ ] Support for exporting modified apps
+   - [ ] Modify control properties: size/position/text/picture
 
-[查看开发计划](https://github.com/jrsen/Xposed-GodMode/projects)
+[View development plan](https://github.com/jrsen/Xposed-GodMode/projects)
 
-## 噢 真糟糕这是目前存在的问题
+## Oh that's too bad this is the problem
 
-- 无法屏蔽悬浮窗中的控件
-- 屏蔽列表中的控件可能会导致混乱
+- Unable to block the controls in the floating window
+- Blocking controls in the list can cause confusion
 
-[查看isuse](https://github.com/jrsen/Xposed-GodMode/issues)
+[View isuse](https://github.com/jrsen/Xposed-GodMode/issues)
 
-## 使用的正确姿势
+## Correct posture to use
 
 
 
-## 伙计们我想我应该跟你说些什么
+## Guys I think I should tell you something
 
-因工作繁忙(借口)导致项目进展一直很慢未能及时兼容新的Android版本因此出现各种莫名其妙的问题加上之前有很多伙计联系我希望能开源所以在我思考很久之后决定开源独乐不如众乐，各路神仙要什么功能可以提个```issue```我会按实现复杂度列个项目开发计划，闲暇之余我也会来更新更新,希望有能力的伙计们也可以一起维护这个项目。
+Due to busy work (excuses), the progress of the project has been slow and failed to be compatible with the new Android version in time, so various inexplicable problems have appeared. In addition, many guys contacted me before, hoping to open source, so after I thought for a long time, I decided that open source is worse than others. Happy, you can file an ```issue``` for any functions that gods want this project.

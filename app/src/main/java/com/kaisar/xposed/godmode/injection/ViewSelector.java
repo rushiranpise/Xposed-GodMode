@@ -26,7 +26,6 @@ import com.kaisar.xposed.godmode.injection.GodModeInjector;
 import com.kaisar.xposed.godmode.injection.ViewController;
 import com.kaisar.xposed.godmode.injection.ViewHelper;
 import com.kaisar.xposed.godmode.injection.bridge.GodModeManager;
-import com.kaisar.xposed.godmode.injection.util.ActivityUtils;
 import com.kaisar.xposed.godmode.injection.util.GmResources;
 import com.kaisar.xposed.godmode.injection.util.Logger;
 import com.kaisar.xposed.godmode.injection.util.Property;
@@ -50,27 +49,21 @@ public final class ViewSelector implements Property.OnPropertyChangeListener<Boo
 
     private MaskView mMaskView;
     private View mNodeSelectorPanel;
-    private ArrayList<Activity> activityList = new ArrayList<>();
-    private Activity currentActivity;
+    private Activity activity = null;
     private SeekBar seekbar = null;
     public static volatile boolean mKeySelecting = false;
 
 
     public void setTopActivity(final Activity a) {
         Logger.d(TAG+".SelectPanel","set top activity: " + a);
-        activityList.add(a);
+        activity = a;
         ViewController.cleanStack();
     }
 
     public void setPanel(Boolean display) {
-        if (activityList.size() == 0) return;
-        currentActivity = ActivityUtils.getTopActivity(GodModeInjector.appContext, activityList);
-        if (currentActivity == null) {
-            Toast.makeText(GodModeInjector.appContext, "No get activity", Toast.LENGTH_SHORT).show();
-            return;
-        }
+        if (activity == null) return;
         if (display) {
-            showNodeSelectPanel(currentActivity);
+            showNodeSelectPanel(activity);
         } else {
             dismissNodeSelectPanel();
         }

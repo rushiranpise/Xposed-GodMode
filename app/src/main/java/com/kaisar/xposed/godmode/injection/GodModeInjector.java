@@ -4,7 +4,6 @@ import static com.kaisar.xposed.godmode.GodModeApplication.TAG;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.app.Application;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -110,12 +109,6 @@ public final class GodModeInjector implements IXposedHookLoadPackage, IXposedHoo
             XServiceManager.registerService("godmode", (XServiceManager.ServiceFetcher<Binder>) GodModeManagerService::new);
         } else {//Run in other application processes
 //            hook activity的onCreate
-            XposedHelpers.findAndHookMethod(Application.class, "attach", Context.class, new XC_MethodHook() {
-                @Override
-                protected void afterHookedMethod(MethodHookParam param) throws Throwable {
-                    appContext = (Context) param.args[0];
-                }
-            });
             XposedHelpers.findAndHookMethod(Activity.class, "onCreate", Bundle.class, new XC_MethodHook() {
                 @Override
                 protected void afterHookedMethod(MethodHookParam param) throws Throwable {
